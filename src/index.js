@@ -1,17 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { useFormik } from "formik";
+import "./styles.css";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const SignupForm = () => {
+    const formik = useFormik({
+    initialValues: { email: "" },
+    onSubmit: values => {
+        alert(JSON.stringify(values, null, 2));
+    }
+    });
+    return (
+    <form onSubmit={formik.handleSubmit}>
+        <label htmlFor="email">Email Address</label>
+            <input
+            id="email"
+            name="email"
+            type="email"
+            onChange={formik.handleChange}
+            value={formik.values.email}
+        />
+        <button type="submit">Submit</button>
+    </form>
+    );
+};
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+function App() {
+    return <SignupForm />;
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
