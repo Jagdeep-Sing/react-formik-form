@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle} from "react";
+import React, {forwardRef} from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -8,39 +8,12 @@ import Select from '@material-ui/core/Select';
 const SelectBox = forwardRef(
     (props, ref) => {
         const [value, setValue] = React.useState("");
-        const [error, setError] = React.useState("");
     
         const handleChange = (event) => {
             setValue(event.target.value)
-            setError("")
             props.onChange(event.target.name, event.target.value)
         }
 
-        const validate = () => {
-            // return true if is valid
-            // else return false
-            if (props.validation) {
-                const rules = props.validation.split("|");
-
-                for (let i = 0; i < rules.length; i++) {
-                    const current = rules[i];
-
-                    if (current === "required") {
-                        if (!value) {
-                            setError("Please select the age")
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-
-        useImperativeHandle(ref, () => {
-            return {
-                validate: () => validate()
-            }
-        })
         const classes = useStyles();
         return(
             <div className="input-wrapper">
@@ -65,11 +38,6 @@ const SelectBox = forwardRef(
                     <MenuItem value={30}>Thirty</MenuItem>
                 </Select>
             </FormControl>
-            {error && (
-                <p className="error">
-                    {error}
-                </p>
-            )}
         </div>
         )
     }
@@ -79,8 +47,7 @@ SelectBox.defaultProps = {
     placeholder: "",
     name: "",
     type: "",
-    value: "",
-    validation : ""
+    value: ""
 }
 
 const useStyles = makeStyles((theme) => ({

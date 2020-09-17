@@ -1,4 +1,4 @@
-import React, {forwardRef, useImperativeHandle} from "react";
+import React, {forwardRef} from "react";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -8,39 +8,11 @@ import FormLabel from '@material-ui/core/FormLabel';
 const RadioButtons = forwardRef(
     (props, ref) => {
         const [value, setValue] = React.useState("");
-        const [error, setError] = React.useState("");
     
         const handleChange = (event) => {
             setValue(event.target.value)
-            setError("")
             props.onChange(event.target.name, event.target.value)
         }
-
-        const validate = () => {
-            // return true if is valid
-            // else return false
-            if (props.validation) {
-                const rules = props.validation.split("|");
-
-                for (let i = 0; i < rules.length; i++) {
-                    const current = rules[i];
-
-                    if (current === "required") {
-                        if (!value) {
-                            setError("Please select the Gender")
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
-        }
-
-        useImperativeHandle(ref, () => {
-            return {
-                validate: () => validate()
-            }
-        })
         
         return(
             <div className="rad">
@@ -58,11 +30,6 @@ const RadioButtons = forwardRef(
                     <FormControlLabel value="other" control={<Radio />} label="Other" />
                 </RadioGroup>
             </FormControl>
-            {error && (
-                <p className="error">
-                    {error}
-                </p>
-            )}
         </div>
         )
     }
@@ -71,7 +38,6 @@ const RadioButtons = forwardRef(
 RadioButtons.defaultProps = {
     name: "",
     value: "",
-    validation : ""
 }
 
 export default RadioButtons;
