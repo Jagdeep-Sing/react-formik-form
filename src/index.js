@@ -99,7 +99,7 @@ const SignupForm = () => {
                 />
                 {formik.touched.username && formik.errors.username ? (
 
-                    <div>{formik.errors.username}</div>
+                    <div className="error">{formik.errors.username}</div>
 
                 ) : null}
 
@@ -112,7 +112,7 @@ const SignupForm = () => {
                 />
                 {formik.touched.email && formik.errors.email ? (
 
-                    <div>{formik.errors.email}</div>
+                    <div className="error">{formik.errors.email}</div>
 
                 ) : null}
 
@@ -126,7 +126,7 @@ const SignupForm = () => {
                 />
                 {formik.touched.luckyNumber && formik.errors.luckyNumber ? (
 
-                    <div>{formik.errors.luckyNumber}</div>
+                    <div className="error">{formik.errors.luckyNumber}</div>
 
                 ) : null}
 
@@ -139,7 +139,7 @@ const SignupForm = () => {
                 />
                 {formik.touched.password && formik.errors.password ? (
 
-                    <div>{formik.errors.password}</div>
+                    <div className="error">{formik.errors.password}</div>
 
                 ) : null}
 
@@ -151,7 +151,7 @@ const SignupForm = () => {
                 />
                 {formik.touched.age && formik.errors.age ? (
 
-                    <div>{formik.errors.age}</div>
+                    <div className="error">{formik.errors.age}</div>
 
                 ) : null}
 
@@ -163,7 +163,7 @@ const SignupForm = () => {
                 />
                 {formik.touched.gender && formik.errors.gender ? (
 
-                    <div>{formik.errors.gender}</div>
+                    <div className="error">{formik.errors.gender}</div>
 
                 ) : null}
 
@@ -174,7 +174,7 @@ const SignupForm = () => {
                 />
                 {formik.touched.dob && formik.errors.dob ? (
 
-                    <div>{formik.errors.dob}</div>
+                    <div className="error">{formik.errors.dob}</div>
 
                 ) : null}
 
@@ -182,14 +182,14 @@ const SignupForm = () => {
                     ref={inputRefs.current[7]}
                     name="about"
                     label="Something about you"
-                    multiline="true"
+                    multiline={true}
                     variant="outlined"
                     rows="3"
                     {...formik.getFieldProps('about')}
                 />
                 {formik.touched.about && formik.errors.about ? (
 
-                    <div>{formik.errors.about}</div>
+                    <div className="error">{formik.errors.about}</div>
 
                 ) : null}
 
@@ -201,15 +201,11 @@ const SignupForm = () => {
                 />
                 {formik.touched.agreed && formik.errors.agreed ? (
 
-                    <div>{formik.errors.agreed}</div>
+                    <div className="error">{formik.errors.agreed}</div>
 
                 ) : null}
                 <button type="submit">SignUp</button>
             </form>
-            <div className="form">
-                {/* <ReactJson src={data} /> */}
-                {/* <button onClick={resetForm}>RESET</button> */}
-            </div>
         </div>
     );
 }

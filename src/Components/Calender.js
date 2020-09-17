@@ -15,13 +15,12 @@ const Calender = forwardRef(
         return(
             <div className="input-wrapper">
                 
-                <form className={classes.container} noValidate>
+                <div className={classes.container} noValidate>
                     <TextField
                         id="date"
                         name = {props.name}
                         label="Birthday"
                         type="date"
-                        defaultValue="2017-05-24"
                         className={classes.textField}
                         value={props.value ? props.value : value} 
                         onChange={(event) => handleChange(event)}
@@ -29,7 +28,7 @@ const Calender = forwardRef(
                             shrink: true,
                         }}
                     />
-                </form>
+                </div>
             )
         </div>
         )

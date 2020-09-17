@@ -29,7 +29,7 @@ const CheckBox = forwardRef(
 CheckBox.defaultProps = {
     placeholder: "",
     name: "",
-    value: "",
+    value: {},
 }
 
 export default CheckBox;
