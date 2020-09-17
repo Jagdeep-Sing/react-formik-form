@@ -1,31 +1,57 @@
-import React from "react";
+import React from 'react';
 import ReactDOM from "react-dom";
-import { useFormik } from "formik";
 import "./styles.css";
+import InputField from './Components/InputField';
+import SelectBox from './Components/SelectBox';
+import RadioButtons from './Components/RadioButtons';
+import Calender from './Components/Calender';
+import TextArea from './Components/TextArea';
+import Checkbox from './Components/checkbox'
+import { useFormik } from "formik";
 import * as Yup from 'yup';
+
+
 const SignupForm = () => {
+
+    const inputRefs = React.useRef(
+        [
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef(),
+            React.createRef()
+        ]
+    );
 
     const formik = useFormik({
 
         initialValues: {
 
-            firstName: '',
-
-            lastName: '',
-
+            username: '',
             email: '',
+            luckyNumber: '',
+            password: '',
+            age: '',
+            gender: '',
+            dob: '',
+            about: '',
+            agreed: ''
 
         },
 
         validationSchema: Yup.object({
 
-            firstName: Yup.string()
+            username: Yup.string()
 
-                .max(15, 'Must be 15 characters or less')
+                .max(12, 'Must be 15 characters or less')
 
                 .required('Required'),
 
-            lastName: Yup.string()
+            luckyNumber: Yup.string()
 
                 .max(20, 'Must be 20 characters or less')
 
@@ -36,6 +62,19 @@ const SignupForm = () => {
                 .email('Invalid email address')
 
                 .required('Required'),
+
+            password: Yup.string()
+                .required('Please Enter your password')
+                .matches(
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+                ),
+            age: Yup.string().required('Please select the age'),
+            gender: Yup.string().required('Please select the gender'),
+            dob: Yup.string().required('Please select the dob'),
+            about: Yup.string().required('Please enter something'),
+            agreed: Yup.string().required('Please select this')
+
 
         }),
 
@@ -48,45 +87,135 @@ const SignupForm = () => {
     });
 
     return (
+        <div className="App">
+            <form onSubmit={formik.handleSubmit} className="form">
+                <h1>SIGN UP</h1>
+                <InputField
+                    ref={inputRefs.current[0]}
+                    name="username"
+                    label="Username:"
+                    type="text"
+                    {...formik.getFieldProps('username')}
+                />
+                {formik.touched.username && formik.errors.username ? (
 
-        <form onSubmit={formik.handleSubmit}>
+                    <div>{formik.errors.username}</div>
 
-            <label htmlFor="firstName">First Name</label>
+                ) : null}
 
-            <input id="firstName" type="text" {...formik.getFieldProps('firstName')} />
+                <InputField
+                    ref={inputRefs.current[1]}
+                    name="email"
+                    label="Email:"
+                    type="text"
+                    {...formik.getFieldProps('email')}
+                />
+                {formik.touched.email && formik.errors.email ? (
 
-            {formik.touched.firstName && formik.errors.firstName ? (
+                    <div>{formik.errors.email}</div>
 
-                <div>{formik.errors.firstName}</div>
+                ) : null}
 
-            ) : null}
 
-            <label htmlFor="lastName">Last Name</label>
+                <InputField
+                    ref={inputRefs.current[2]}
+                    name="luckyNumber"
+                    label="Your lucky number:"
+                    type="number"
+                    {...formik.getFieldProps('luckyNumber')}
+                />
+                {formik.touched.luckyNumber && formik.errors.luckyNumber ? (
 
-            <input id="lastName" type="text" {...formik.getFieldProps('lastName')} />
+                    <div>{formik.errors.luckyNumber}</div>
 
-            {formik.touched.lastName && formik.errors.lastName ? (
+                ) : null}
 
-                <div>{formik.errors.lastName}</div>
+                <InputField
+                    ref={inputRefs.current[3]}
+                    name="password"
+                    label="Password:"
+                    type="password"
+                    {...formik.getFieldProps('password')}
+                />
+                {formik.touched.password && formik.errors.password ? (
 
-            ) : null}
+                    <div>{formik.errors.password}</div>
 
-            <label htmlFor="email">Email Address</label>
+                ) : null}
 
-            <input id="email" type="email" {...formik.getFieldProps('email')} />
+                <SelectBox
+                    ref={inputRefs.current[4]}
+                    name="age"
+                    label="Age"
+                    {...formik.getFieldProps('age')}
+                />
+                {formik.touched.age && formik.errors.age ? (
 
-            {formik.touched.email && formik.errors.email ? (
+                    <div>{formik.errors.age}</div>
 
-                <div>{formik.errors.email}</div>
+                ) : null}
 
-            ) : null}
+                <RadioButtons
+                    ref={inputRefs.current[5]}
+                    name="gender"
+                    label="Gender"
+                    {...formik.getFieldProps('gender')}
+                />
+                {formik.touched.gender && formik.errors.gender ? (
 
-            <button type="submit">Submit</button>
+                    <div>{formik.errors.gender}</div>
 
-        </form>
+                ) : null}
+
+                <Calender
+                    ref={inputRefs.current[6]}
+                    name="dob"
+                    {...formik.getFieldProps('dob')}
+                />
+                {formik.touched.dob && formik.errors.dob ? (
+
+                    <div>{formik.errors.dob}</div>
+
+                ) : null}
+
+                <TextArea
+                    ref={inputRefs.current[7]}
+                    name="about"
+                    label="Something about you"
+                    multiline="true"
+                    variant="outlined"
+                    rows="3"
+                    {...formik.getFieldProps('about')}
+                />
+                {formik.touched.about && formik.errors.about ? (
+
+                    <div>{formik.errors.about}</div>
+
+                ) : null}
+
+                <Checkbox
+                    ref={inputRefs.current[8]}
+                    name="agreed"
+                    label="Agree"
+                    {...formik.getFieldProps('agreed')}
+                />
+                {formik.touched.agreed && formik.errors.agreed ? (
+
+                    <div>{formik.errors.agreed}</div>
+
+                ) : null}
+                <button type="submit">SignUp</button>
+            </form>
+            <div className="form">
+                {/* <ReactJson src={data} /> */}
+                {/* <button onClick={resetForm}>RESET</button> */}
+            </div>
+        </div>
     );
+}
 
-};
+
+
 function App() {
     return <SignupForm />;
 }
